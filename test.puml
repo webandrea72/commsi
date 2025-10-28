@@ -1,12 +1,16 @@
 @startuml
+header 머리말
+footer 꼬리말
 title 시퀀스 다이어그램
 actor Client as C
 participant Server as S
+== Loop ==
 loop M times
     loop N times
         C -> C: 로직 수행
     end
 end
+== alt ==
 alt Case 1
         C -[#0000FF]> S: <font color="#0000FF"> API-1 요청 
         activate S
@@ -21,4 +25,25 @@ else Case 2
     S -> C: API-1 응답
     deactivate S
 end
+== Note ==
+note left C #FF3300
+    Clinent 좌측 노트
+end note
+note right C #yellow
+    Clinent 우측 노트
+end note
+note over C, S #00AAFF
+    Cilent, Sever1을 가로지르는 노트
+end note
+note across #pink: 전체를 가로지르는 노트
+== 글씨 ==
+note over C, S
+  **굵게**
+  //기울게//
+  ""monospace"" 폰트
+   --aaa--
+   __밑줄__
+   <color #red>빨간색</color>
+   <b>굵게</b>
+end note
 @enduml
