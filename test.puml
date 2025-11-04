@@ -14,7 +14,7 @@ end
 alt Case 1
         C -[#0000FF]> S: <font color="#0000FF"> API-1 요청 
         activate S
-        S -[#FF0000]X C: <b><font color="#FF0000"> API-1 응답 실패
+        S --[#FF0000]X C: <b><font color="#FF0000"> API-1 응답 실패
         deactivate S
 else Case 2
     C -> S: API-2 요청
@@ -22,7 +22,7 @@ else Case 2
     loop N times
         S -> S: 로직 수행
     end
-    S -> C: API-1 응답
+    S --> C: API-1 응답
     deactivate S
 end
 == Note ==
