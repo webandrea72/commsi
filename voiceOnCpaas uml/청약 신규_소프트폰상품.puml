@@ -1,0 +1,63 @@
+@startuml
+
+header 청약
+footer Voice On CPaaS
+title 소프트폰 PC 부가상품 신규 청약
+actor customer as C #fffb00ff
+participant portal as P #00ddffff
+participant biznaru as B #00ddffff
+participant kos as K #00ddffff
+participant ktps as KP #00ddffff
+participant centrex as CT #00ddffff
+participant voice as V #00ddffff
+
+C -> P: 소프트폰 PC 부가상품 가입
+== 커뮤니즈 고객의 Centrex 가입 번호 조회 ==
+P -> CT: 회원 가입 번호 조회(cnetrex/**<color #red>reqUserList(GETLIST)</color>**)
+note left P #ff8000ff
+    조회요청 시 가입자번호(대표번호로 추정)
+    획득 방법 확인 필요
+end note
+CT -> P: 고객의 가입자 번호 리스트
+== 부가상품 청약 요청 ==
+P -> P: 고객의 가입자 번호 리스트 중 1개의 번호 선택
+P -> P: ID, PW 입력
+note left P #ff8000ff
+    ID, PW 수동/자동등
+    발급 정책 확정 필요
+end note
+P -> B: 신규청약 승인요청(**<color #red>INF-BIZNARU-421</color>**)
+B -> K: 신규청약 승인요청
+K -> K: 부가상품 청약 처리
+
+alt <color #0000FF>부가상품 청약 성공 시</color>
+
+par <color #89c423fa>청약 신청 결과</color>
+K --> B: 부가상품 청약 결과
+B --> P: 부가상품 청약 결과
+P -> P: 부가상품 청약 정보 저장
+note left P #ff8000ff
+    부가상품 가입정보,
+    부가상품+기업전화번호 매핑 정보 저장
+    기업전화번호+ID, PW 매핑 정보 저장
+end note
+P --> C: 부가상품 가입 성공 결과 Noti.
+else <color #89c423fa>청약 승인 정보 연동</color>
+K -> KP: 부가상품 가입 정보
+KP -> CT: 부가상품 가입 정보
+CT -> V: 부가상품 가입 정보
+end
+
+else <color #FF0000>부가상품 청약 실패 시</color>
+K --> B: 부가상품 청약 결과
+B --> P: 부가상품 청약 결과
+P --> C: 부가상품 가입 실패 결과 Noti.
+end
+
+== 비고 ==
+note left P #ff8000ff
+    1. 소프트폰과 가입회선은 1:1 관계로 지정
+    2. 회선별 ID, PW는 소프트폰 인증 시 사용
+end note
+
+@enduml

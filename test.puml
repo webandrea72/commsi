@@ -4,6 +4,12 @@ footer 꼬리말
 title 시퀀스 다이어그램
 actor Client as C
 participant Server as S
+
+boundary Foo2
+control Foo3
+entity Foo4
+database Foo5
+collections Foo6
 == Loop ==
 loop M times
     loop N times
@@ -24,6 +30,12 @@ else Case 2
     end
     S --> C: API-1 응답
     deactivate S
+end
+== parrel ==
+par 병렬1
+C -> S: message
+else 병렬2
+C -> S: message2
 end
 == Note ==
 note left C #FF3300
